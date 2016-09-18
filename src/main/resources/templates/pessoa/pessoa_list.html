@@ -1,0 +1,40 @@
+<html layout:decorator="layout">
+
+<div layout:fragment="content">
+
+
+	<!--     <a class="btn btn-primary" href="/posts/new">Add new post</a> -->
+	<form action="#" th:action="@{/pessoa}"
+		th:object="${pessoaFilter}" method="post">
+		<p>
+			Message: <input type="text" th:field="*{nome}" />
+			Idade: <input type="text" th:field="*{idade}" />
+		</p>
+		<p>
+			<input type="submit" value="Submit" /> 
+		</p>
+	</form>
+
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Nome</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-th-each="pessoa : ${pessoas}">
+				<td class="message" th:text="${pessoa.id}" />
+				<td class="message" th:text="${pessoa.nome}" />
+					<!--             <td> --> <!--                 <a th:href="@{'/posts/{id}/delete'(id=${post.id})}" class="delete" th:attr="name=${post.message}"> -->
+					<!--                         <span class="fa-stack"> --> <!--                             <i class="glyphicon glyphicon-trash"></i> -->
+					<!--                         </span> --> <!--                 </a> -->
+					<!--             </td> --> <!--             <td> --> <!--                 <a th:href="@{'/posts/{id}/edit'(id=${post.id})}" class="edit" th:attr="name=${post.message}"> -->
+					<!--                     <span class="fa-stack"> --> <!--                         <i class="glyphicon glyphicon-edit"></i> -->
+					<!--                     </span> --> <!--                 </a> -->
+					<!--             </td> --></tr>
+		</tbody>
+	</table>
+</div>
+</html>
