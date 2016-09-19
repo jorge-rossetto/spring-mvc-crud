@@ -7,7 +7,7 @@
 	<form action="#" th:action="@{/pessoa}"
 		th:object="${pessoaFilter}" method="post">
 		<p>
-			Message: <input type="text" th:field="*{nome}" />
+			Nome: <input type="text" th:field="*{nome}" />
 			Idade: <input type="text" th:field="*{idade}" />
 		</p>
 		<p>
@@ -20,13 +20,14 @@
 			<tr>
 				<th>ID</th>
 				<th>Nome</th>
-				<th></th>
+				<th>Idade</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr data-th-each="pessoa : ${pessoas}">
 				<td class="message" th:text="${pessoa.id}" />
 				<td class="message" th:text="${pessoa.nome}" />
+				<td class="message" th:text="${pessoa.idade}" />
 					<!--             <td> --> <!--                 <a th:href="@{'/posts/{id}/delete'(id=${post.id})}" class="delete" th:attr="name=${post.message}"> -->
 					<!--                         <span class="fa-stack"> --> <!--                             <i class="glyphicon glyphicon-trash"></i> -->
 					<!--                         </span> --> <!--                 </a> -->

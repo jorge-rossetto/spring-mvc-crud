@@ -1,5 +1,7 @@
 package app;
 
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -23,6 +25,9 @@ public class Application implements CommandLineRunner {
 		for (int i = 0; i < 5; i++) {
 			Pessoa pessoa = new Pessoa();
 			pessoa.setNome("Pessoa " + i);
+			
+			Random random = new Random();
+			pessoa.setIdade(random.nextInt(70 - 20) + 20);
 			repository.save(pessoa);
 		}
 	}
