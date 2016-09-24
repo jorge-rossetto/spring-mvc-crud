@@ -2,6 +2,8 @@
 
 <div layout:fragment="content">
 
+	<div th:with="formAction=${someValue}">
+
 	<form role="form"
 		th:action="${updateMode} ? '@{'/pessoa/{id}/edit'(id=${pessoa.id})}' : '@{/pessoa/create}'"
 		th:object="${pessoa}" method="post">
