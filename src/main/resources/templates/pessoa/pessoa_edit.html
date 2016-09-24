@@ -1,0 +1,29 @@
+<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
+
+<div layout:fragment="content">
+
+	<form role="form"
+		th:action="${updateMode} ? '@{'/pessoa/{id}/edit'(id=${pessoa.id})}' : '@{/pessoa/create}'"
+		th:object="${pessoa}" method="post">
+
+		<span th:text="${updateMode}"></span>
+
+		<ul th:if="${#fields.hasAnyErrors()}">
+			<li th:each="error : ${#fields.allErrors()}" th:text="${error}" />
+		</ul>
+
+		<fieldset>
+			<legend>Pessoa</legend>
+			<div class="form-group">
+				<label for="nome">Nome</label> <input type="text" th:field="*{nome}"
+					th:errorclass="fieldError" class="form-control" /> <label
+					for="nome">Idade</label> <input type="text" th:field="*{idade}"
+					th:errorclass="fieldError" class="form-control" />
+			</div>
+		</fieldset>
+
+
+		<button type="submit" id="submit" class="btn btn-primary">Inserir</button>
+	</form>
+</div>
+</html>

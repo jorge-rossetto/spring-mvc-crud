@@ -3,9 +3,12 @@ package app.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import app.domain.Pessoa;
 import app.domain.PessoaRepository;
@@ -14,25 +17,63 @@ import app.domain.PessoaRepository;
 @RequestMapping("/pessoa")
 public class PessoaController {
 
+	// TODO campo de data
+
 	@Autowired
 	private PessoaRepository repository;
 
 	@RequestMapping(method = { RequestMethod.GET, RequestMethod.POST })
-	public String list(@ModelAttribute("pessoaFilter") Pessoa pessoaFilter, Model model) {
+	public String list(@ModelAttribute("pessoaFilter") Pessoa pessoaFilter, final BindingResult bindingResult,
+			Model model) {
 
-		System.out.println(pessoaFilter);
-		
-		
+		if (bindingResult.hasErrors()) {
+			System.out.println("deu ruim");
+			return "pessoa/pessoa_list";
+		}
+
 		model.addAttribute("pessoas", repository.findByFilter(pessoaFilter));
 		return "pessoa/pessoa_list";
 	}
 
-	// @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-	// public ModelAndView delete(@PathVariable long id) {
-	// repository.delete(id);
+	@RequestMapping(value = "/new", method = RequestMethod.GET)
+	public ModelAndView newPessoa() {
+		System.out.println("************************ newPessoa");
+		ModelAndView modelAndView = new ModelAndView("pessoa/pessoa_edit");
+		modelAndView.addObject("pessoa", new Pessoa());
+		return modelAndView;
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public String create(@ModelAttribute("pessoa") Pessoa pessoa, final BindingResult bindingResult, Model model) {
+		System.out.println("************************ create");
+
+		if (bindingResult.hasErrors()) {
+			System.out.println("deu ruim na inclusao");
+			return "pessoa/pessoa_edit";
+		}
+
+		repository.save(pessoa);
+
+		return "redirect:/pessoa";
+	}
+
+	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
+	public String edit(@PathVariable long id, Model model) {
+		Pessoa pessoa = repository.findOne(id);
+		model.addAttribute("pessoa", pessoa);
+		model.addAttribute("updateMode", true);
+		return "pessoa/pessoa_edit";
+	}
+
+	// @RequestMapping(value = "/update", method = RequestMethod.POST)
+	// public ModelAndView update(@RequestParam("id") long id,
+	// @RequestParam("message") String message) {
+	// Post post = repository.findOne(id);
+	// post.setMessage(message);
+	// repository.save(post);
 	// return new ModelAndView("redirect:/posts");
 	// }
-	//
+
 	// @RequestMapping(value="/new", method = RequestMethod.GET)
 	// public String newProject() {
 	// return "posts/new";
@@ -43,6 +84,13 @@ public class PessoaController {
 	// repository.save(new Post(comment));
 	// return new ModelAndView("redirect:/posts");
 	// }
+
+	// @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
+	// public ModelAndView delete(@PathVariable long id) {
+	// repository.delete(id);
+	// return new ModelAndView("redirect:/posts");
+	// }
+	//
 	//
 	// @RequestMapping(value = "/update", method = RequestMethod.POST)
 	// public ModelAndView update(@RequestParam("post_id") long id,

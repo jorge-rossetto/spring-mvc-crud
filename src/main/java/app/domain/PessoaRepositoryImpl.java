@@ -12,7 +12,6 @@ import javax.persistence.TypedQuery;
 
 import org.apache.commons.lang3.StringUtils;
 
-
 public class PessoaRepositoryImpl implements PessoaRepositoryCustom {
 
 	@PersistenceContext
@@ -30,32 +29,23 @@ public class PessoaRepositoryImpl implements PessoaRepositoryCustom {
 			params.put("nome", "%" + filter.getNome().toLowerCase() + "%");
 		}
 
+		if (filter.getIdade() != null) {
+			jpql.append("and this.idade = :idade ");
+			params.put("idade", filter.getIdade());
+		}
+
 		TypedQuery<Pessoa> resultQuery = em.createQuery(jpql.toString(), Pessoa.class);
-		
+
 		setParameters(resultQuery, params);
 
 		return resultQuery.getResultList();
 	}
-	
-	protected void setParameters(TypedQuery<?> resultQuery, Map<String, Object> listaParams) {
-        setParameters(resultQuery, null, listaParams);
-    }
-	
-    protected void setParameters(TypedQuery<?> resultQuery, TypedQuery<?> countQuery, Map<String, Object> listaParams) {
-        Set<Entry<String, Object>> pares = listaParams.entrySet();
 
-        for (Entry<String, Object> par : pares) {
-            setParameter(resultQuery, countQuery, par.getKey(), par.getValue());
-        }
-    }
-    
-    protected void setParameter(TypedQuery<?> resultQuery, TypedQuery<?> countQuery, String nomeParam, Object valorParam) {
-
-        resultQuery.setParameter(nomeParam, valorParam);
-
-        if (countQuery != null) {
-            countQuery.setParameter(nomeParam, valorParam);
-        }
-    }
+	private void setParameters(TypedQuery<?> resultQuery, Map<String, Object> listaParams) {
+		Set<Entry<String, Object>> pares = listaParams.entrySet();
+		for (Entry<String, Object> par : pares) {
+			resultQuery.setParameter(par.getKey(), par.getValue());
+		}
+	}
 
 }

@@ -1,18 +1,21 @@
-<html layout:decorator="layout">
+<html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
 
 <div layout:fragment="content">
 
 
-	<!--     <a class="btn btn-primary" href="/posts/new">Add new post</a> -->
-	<form action="#" th:action="@{/pessoa}"
-		th:object="${pessoaFilter}" method="post">
+	<form action="#" th:action="@{/pessoa}" th:object="${pessoaFilter}"
+		method="post">
+
+		<ul th:if="${#fields.hasAnyErrors()}">
+			<li th:each="error : ${#fields.allErrors()}" th:text="${error}" />
+		</ul>
+
 		<p>
-			Nome: <input type="text" th:field="*{nome}" />
+			Nome: <input type="text" th:field="*{nome}" /> 
 			Idade: <input type="text" th:field="*{idade}" />
 		</p>
 		<p>
-			<input type="submit" value="Submit" />
-			
+			<input type="submit" value="Listar" />
 		</p>
 	</form>
 
@@ -29,14 +32,24 @@
 				<td class="message" th:text="${pessoa.id}" />
 				<td class="message" th:text="${pessoa.nome}" />
 				<td class="message" th:text="${pessoa.idade}" />
-					<!--             <td> --> <!--                 <a th:href="@{'/posts/{id}/delete'(id=${post.id})}" class="delete" th:attr="name=${post.message}"> -->
-					<!--                         <span class="fa-stack"> --> <!--                             <i class="glyphicon glyphicon-trash"></i> -->
-					<!--                         </span> --> <!--                 </a> -->
-					<!--             </td> --> <!--             <td> --> <!--                 <a th:href="@{'/posts/{id}/edit'(id=${post.id})}" class="edit" th:attr="name=${post.message}"> -->
-					<!--                     <span class="fa-stack"> --> <!--                         <i class="glyphicon glyphicon-edit"></i> -->
-					<!--                     </span> --> <!--                 </a> -->
-					<!--             </td> --></tr>
+				<!--             <td> -->
+				<!--                 <a th:href="@{'/posts/{id}/delete'(id=${post.id})}" class="delete" th:attr="name=${post.message}"> -->
+				<!--                         <span class="fa-stack"> -->
+				<!--                             <i class="glyphicon glyphicon-trash"></i> -->
+				<!--                         </span> -->
+				<!--                 </a> -->
+				<!--             </td> -->
+         	<td>
+            	 <a th:href="@{'/pessoa/{id}/edit'(id=${pessoa.id})}" class="edit">
+                 	<span class="fa-stack">
+                    	<i class="glyphicon glyphicon-edit"></i>
+                 	</span>
+            	 </a>
+         	</td>
+			</tr>
 		</tbody>
 	</table>
+
+	<a class="btn btn-primary" th:href="@{/pessoa/new}">Inserir</a>
 </div>
 </html>

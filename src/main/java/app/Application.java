@@ -17,7 +17,6 @@ public class Application implements CommandLineRunner {
 	private PessoaRepository repository;
 
 	public static void main(String[] args) {
-		System.out.println("bla");
 		SpringApplication.run(Application.class, args);
 	}
 
