@@ -20,15 +20,17 @@
 			<legend>Pessoa</legend>
 			<div class="form-group">
 				<input type="hidden" th:field="*{id}" />
-				<label for="nome">Nome</label> <input type="text" th:field="*{nome}"
-					th:errorclass="fieldError" class="form-control" /> <label
-					for="nome">Idade</label> <input type="text" th:field="*{idade}"
-					th:errorclass="fieldError" class="form-control" />
+				<label for="nome">Nome</label> 
+				<input type="text" th:field="*{nome}" th:errorclass="fieldError" class="form-control" /> 
+				<label for="nome">Idade</label> 
+				<input type="text" th:field="*{idade}" th:errorclass="fieldError" class="form-control" />
+				<label for="nome">Data nascimento</label> 
+				<input type="text" th:field="*{{dataNascimento}}" class="form-control" />
 			</div>
 		</fieldset>
 
 
-		<button type="submit" id="submit" class="btn btn-primary">Inserir</button>
+		<button type="submit" id="submit" class="btn btn-primary" th:text="${updateMode} ? 'Alterar' : 'Incluir'" />
 	</form>
 </div>
 </html>

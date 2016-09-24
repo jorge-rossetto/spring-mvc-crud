@@ -25,6 +25,8 @@
 				<th>ID</th>
 				<th>Nome</th>
 				<th>Idade</th>
+				<th>Data nascimento</th>
+				<th>Data nascimento (sem formatter)</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -32,6 +34,8 @@
 				<td class="message" th:text="${pessoa.id}" />
 				<td class="message" th:text="${pessoa.nome}" />
 				<td class="message" th:text="${pessoa.idade}" />
+				<td class="message" th:text="${{pessoa.dataNascimento}}" />
+				<td class="message" th:text="${pessoa.dataNascimento}" />
 				<td><a th:href="@{'/pessoa/{id}/delete'(id=${pessoa.id})}"
 					class="delete"> <span class="fa-stack"> <i
 							class="glyphicon glyphicon-trash"></i>
