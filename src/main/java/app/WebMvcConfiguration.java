@@ -8,8 +8,7 @@ import app.view.DateFormatter;
 
 @Configuration
 //@EnableAutoConfiguration
-public class ConfigTeste  extends WebMvcConfigurerAdapter {
-	
+public class WebMvcConfiguration  extends WebMvcConfigurerAdapter {
 	
 	@Override
 	public void addFormatters(FormatterRegistry registry) {
