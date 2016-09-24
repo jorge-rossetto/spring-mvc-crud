@@ -21,7 +21,8 @@ public class PessoaController {
 	public String list(@ModelAttribute("pessoaFilter") Pessoa pessoaFilter, Model model) {
 
 		System.out.println(pessoaFilter);
-
+		
+		
 		model.addAttribute("pessoas", repository.findByFilter(pessoaFilter));
 		return "pessoa/pessoa_list";
 	}
