@@ -32,20 +32,16 @@
 				<td class="message" th:text="${pessoa.id}" />
 				<td class="message" th:text="${pessoa.nome}" />
 				<td class="message" th:text="${pessoa.idade}" />
-				<!--             <td> -->
-				<!--                 <a th:href="@{'/posts/{id}/delete'(id=${post.id})}" class="delete" th:attr="name=${post.message}"> -->
-				<!--                         <span class="fa-stack"> -->
-				<!--                             <i class="glyphicon glyphicon-trash"></i> -->
-				<!--                         </span> -->
-				<!--                 </a> -->
-				<!--             </td> -->
-         	<td>
-            	 <a th:href="@{'/pessoa/{id}/edit'(id=${pessoa.id})}" class="edit">
-                 	<span class="fa-stack">
-                    	<i class="glyphicon glyphicon-edit"></i>
-                 	</span>
-            	 </a>
-         	</td>
+				<td><a th:href="@{'/pessoa/{id}/delete'(id=${pessoa.id})}"
+					class="delete"> <span class="fa-stack"> <i
+							class="glyphicon glyphicon-trash"></i>
+					</span>
+				</a></td>
+				<td><a th:href="@{'/pessoa/{id}/edit'(id=${pessoa.id})}"
+					class="edit"> <span class="fa-stack"> <i
+							class="glyphicon glyphicon-edit"></i>
+					</span>
+				</a></td>
 			</tr>
 		</tbody>
 	</table>

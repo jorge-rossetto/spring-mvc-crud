@@ -2,13 +2,15 @@
 
 <div layout:fragment="content">
 
-	<div th:with="formAction=${someValue}">
+<!-- th:action="${updateMode} ? '@{'/pessoa/{id}/edit'(id=${pessoa.id})}' : '@{/pessoa/create}'" -->
 
 	<form role="form"
-		th:action="${updateMode} ? '@{'/pessoa/{id}/edit'(id=${pessoa.id})}' : '@{/pessoa/create}'"
+	
+		th:with="createAction=@{/pessoa/create},
+				 updateAction=@{/pessoa/update}"
+				 
+		th:action="${updateMode} ? ${updateAction} : ${createAction}"
 		th:object="${pessoa}" method="post">
-
-		<span th:text="${updateMode}"></span>
 
 		<ul th:if="${#fields.hasAnyErrors()}">
 			<li th:each="error : ${#fields.allErrors()}" th:text="${error}" />
@@ -17,6 +19,7 @@
 		<fieldset>
 			<legend>Pessoa</legend>
 			<div class="form-group">
+				<input type="hidden" th:field="*{id}" />
 				<label for="nome">Nome</label> <input type="text" th:field="*{nome}"
 					th:errorclass="fieldError" class="form-control" /> <label
 					for="nome">Idade</label> <input type="text" th:field="*{idade}"

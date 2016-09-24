@@ -1,5 +1,6 @@
 package app.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +24,9 @@ public class PessoaController {
 	private PessoaRepository repository;
 
 	@RequestMapping(method = { RequestMethod.GET, RequestMethod.POST })
-	public String list(@ModelAttribute("pessoaFilter") Pessoa pessoaFilter, final BindingResult bindingResult,
-			Model model) {
+	public String list(@ModelAttribute("pessoaFilter") Pessoa pessoaFilter, BindingResult bindingResult, Model model) {
 
 		if (bindingResult.hasErrors()) {
-			System.out.println("deu ruim");
 			return "pessoa/pessoa_list";
 		}
 
@@ -37,18 +36,15 @@ public class PessoaController {
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public ModelAndView newPessoa() {
-		System.out.println("************************ newPessoa");
 		ModelAndView modelAndView = new ModelAndView("pessoa/pessoa_edit");
 		modelAndView.addObject("pessoa", new Pessoa());
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String create(@ModelAttribute("pessoa") Pessoa pessoa, final BindingResult bindingResult, Model model) {
-		System.out.println("************************ create");
+	public String create(@ModelAttribute("pessoa") Pessoa pessoa, BindingResult bindingResult, Model model) {
 
 		if (bindingResult.hasErrors()) {
-			System.out.println("deu ruim na inclusao");
 			return "pessoa/pessoa_edit";
 		}
 
@@ -65,48 +61,24 @@ public class PessoaController {
 		return "pessoa/pessoa_edit";
 	}
 
-	// @RequestMapping(value = "/update", method = RequestMethod.POST)
-	// public ModelAndView update(@RequestParam("id") long id,
-	// @RequestParam("message") String message) {
-	// Post post = repository.findOne(id);
-	// post.setMessage(message);
-	// repository.save(post);
-	// return new ModelAndView("redirect:/posts");
-	// }
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public String update(@ModelAttribute("pessoa") Pessoa pessoaAlterada, BindingResult bindingResult, Model model) {
 
-	// @RequestMapping(value="/new", method = RequestMethod.GET)
-	// public String newProject() {
-	// return "posts/new";
-	// }
-	//
-	// @RequestMapping(value = "/create", method = RequestMethod.POST)
-	// public ModelAndView create(@RequestParam("message") String comment) {
-	// repository.save(new Post(comment));
-	// return new ModelAndView("redirect:/posts");
-	// }
+		if (bindingResult.hasErrors()) {
+			return "pessoa/pessoa_edit";
+		}
 
-	// @RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
-	// public ModelAndView delete(@PathVariable long id) {
-	// repository.delete(id);
-	// return new ModelAndView("redirect:/posts");
-	// }
-	//
-	//
-	// @RequestMapping(value = "/update", method = RequestMethod.POST)
-	// public ModelAndView update(@RequestParam("post_id") long id,
-	// @RequestParam("message") String message) {
-	// Post post = repository.findOne(id);
-	// post.setMessage(message);
-	// repository.save(post);
-	// return new ModelAndView("redirect:/posts");
-	// }
-	//
-	// @RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
-	// public String edit(@PathVariable long id,
-	// Model model) {
-	// Post post = repository.findOne(id);
-	// model.addAttribute("post", post);
-	// return "posts/edit";
-	// }
+		Pessoa pessoaPersistida = repository.findOne(pessoaAlterada.getId());
+		BeanUtils.copyProperties(pessoaAlterada, pessoaPersistida);
+		repository.save(pessoaPersistida);
+
+		return "redirect:/pessoa";
+	}
+
+	@RequestMapping(value = "/{id}/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@PathVariable long id) {
+		repository.delete(id);
+		return new ModelAndView("redirect:/pessoa");
+	}
 
 }

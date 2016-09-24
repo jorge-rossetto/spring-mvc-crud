@@ -65,6 +65,11 @@ public class Pessoa {
 		this.cabelo = cabelo;
 	}
 
+	public void update(Pessoa pessoa) {
+		this.setNome(pessoa.getNome());
+		this.setIdade(pessoa.getIdade());
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
