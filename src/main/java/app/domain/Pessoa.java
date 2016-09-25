@@ -20,7 +20,7 @@ public class Pessoa {
 	
 	private Date dataNascimento;
 	
-	private CorCabelo cabelo;
+	private CorCabelo corCabelo;
 
 	public Pessoa() {
 	}
@@ -57,12 +57,12 @@ public class Pessoa {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public CorCabelo getCabelo() {
-		return cabelo;
+	public CorCabelo getCorCabelo() {
+		return corCabelo;
 	}
 
-	public void setCabelo(CorCabelo cabelo) {
-		this.cabelo = cabelo;
+	public void setCorCabelo(CorCabelo corCabelo) {
+		this.corCabelo = corCabelo;
 	}
 
 	public void update(Pessoa pessoa) {
@@ -74,7 +74,7 @@ public class Pessoa {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((cabelo == null) ? 0 : cabelo.hashCode());
+		result = prime * result + ((corCabelo == null) ? 0 : corCabelo.hashCode());
 		result = prime * result + ((dataNascimento == null) ? 0 : dataNascimento.hashCode());
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((idade == null) ? 0 : idade.hashCode());
@@ -91,7 +91,7 @@ public class Pessoa {
 		if (getClass() != obj.getClass())
 			return false;
 		Pessoa other = (Pessoa) obj;
-		if (cabelo != other.cabelo)
+		if (corCabelo != other.corCabelo)
 			return false;
 		if (dataNascimento == null) {
 			if (other.dataNascimento != null)
@@ -124,8 +124,8 @@ public class Pessoa {
 		builder.append(idade);
 		builder.append(", dataNascimento=");
 		builder.append(dataNascimento);
-		builder.append(", cabelo=");
-		builder.append(cabelo);
+		builder.append(", corCabelo=");
+		builder.append(corCabelo);
 		builder.append("]");
 		return builder.toString();
 	}

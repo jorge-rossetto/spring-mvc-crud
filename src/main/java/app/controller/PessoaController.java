@@ -1,5 +1,7 @@
 package app.controller;
 
+import java.util.Arrays;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import app.domain.CorCabelo;
 import app.domain.Pessoa;
 import app.domain.PessoaRepository;
 
@@ -38,6 +41,9 @@ public class PessoaController {
 	public ModelAndView newPessoa() {
 		ModelAndView modelAndView = new ModelAndView("pessoa/pessoa_edit");
 		modelAndView.addObject("pessoa", new Pessoa());
+		
+		modelAndView.addObject("todasCoresCabelo", Arrays.asList(CorCabelo.values()));
+		
 		return modelAndView;
 	}
 

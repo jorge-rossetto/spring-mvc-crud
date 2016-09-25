@@ -26,6 +26,13 @@
 				<input type="text" th:field="*{idade}" th:errorclass="fieldError" class="form-control" />
 				<label for="nome">Data nascimento</label> 
 				<input type="text" th:field="*{{dataNascimento}}" class="form-control" />
+				
+				<label for="corCabelo">Cor do cabelo</label>
+				<select id="corCabelo" th:field="*{corCabelo}">
+  					<option th:each="cor : ${todasCoresCabelo}" 
+          				th:value="${cor}" 
+          				th:text="${cor.label}" />
+				</select>
 			</div>
 		</fieldset>
 
