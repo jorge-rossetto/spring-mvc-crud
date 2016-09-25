@@ -2,15 +2,9 @@
 
 <div layout:fragment="content">
 
-<!-- th:action="${updateMode} ? '@{'/pessoa/{id}/edit'(id=${pessoa.id})}' : '@{/pessoa/create}'" -->
-
-	<form role="form"
-	
-		th:with="createAction=@{/pessoa/create},
-				 updateAction=@{/pessoa/update}"
-				 
-		th:action="${updateMode} ? ${updateAction} : ${createAction}"
-		th:object="${pessoa}" method="post">
+		<form role="form"
+			th:action="@{/pessoa/save}"
+			th:object="${pessoa}" method="post">
 
 		<ul th:if="${#fields.hasAnyErrors()}">
 			<li th:each="error : ${#fields.allErrors()}" th:text="${error}" />
@@ -33,11 +27,23 @@
           				th:value="${cor}" 
           				th:text="${cor.label}" />
 				</select>
+				
+				<label for="empregada">Empregada?</label> 
+				<input type="checkbox" th:field="*{empregada}" class="form-control" />
+
+				<ul>
+					<li th:each="cargo : ${todosCargos}">
+						<input type="radio"
+							th:field="*{cargo}" th:value="${cargo}" /> 
+						<label
+							th:for="${#ids.prev('cargo')}"
+							th:text="${cargo.label}" ></label>
+					</li>
+				</ul>
 			</div>
 		</fieldset>
 
-
-		<button type="submit" id="submit" class="btn btn-primary" th:text="${updateMode} ? 'Alterar' : 'Incluir'" />
+		<button type="submit" id="submit" class="btn btn-primary" th:text="${updateMode} ? 'Alterar' : 'Incluir'"></button>
 	</form>
 </div>
 </html>

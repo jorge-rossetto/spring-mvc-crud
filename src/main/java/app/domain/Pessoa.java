@@ -21,6 +21,10 @@ public class Pessoa {
 	private Date dataNascimento;
 	
 	private CorCabelo corCabelo;
+	
+	private boolean empregada;
+	
+	private Cargo cargo;
 
 	public Pessoa() {
 	}
@@ -65,17 +69,31 @@ public class Pessoa {
 		this.corCabelo = corCabelo;
 	}
 
-	public void update(Pessoa pessoa) {
-		this.setNome(pessoa.getNome());
-		this.setIdade(pessoa.getIdade());
+	
+	public boolean getEmpregada() {
+		return empregada;
+	}
+
+	public void setEmpregada(boolean empregada) {
+		this.empregada = empregada;
 	}
 	
+	public Cargo getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((cargo == null) ? 0 : cargo.hashCode());
 		result = prime * result + ((corCabelo == null) ? 0 : corCabelo.hashCode());
 		result = prime * result + ((dataNascimento == null) ? 0 : dataNascimento.hashCode());
+		result = prime * result + (empregada ? 1231 : 1237);
 		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result + ((idade == null) ? 0 : idade.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
@@ -91,12 +109,16 @@ public class Pessoa {
 		if (getClass() != obj.getClass())
 			return false;
 		Pessoa other = (Pessoa) obj;
+		if (cargo != other.cargo)
+			return false;
 		if (corCabelo != other.corCabelo)
 			return false;
 		if (dataNascimento == null) {
 			if (other.dataNascimento != null)
 				return false;
 		} else if (!dataNascimento.equals(other.dataNascimento))
+			return false;
+		if (empregada != other.empregada)
 			return false;
 		if (id != other.id)
 			return false;
@@ -126,6 +148,10 @@ public class Pessoa {
 		builder.append(dataNascimento);
 		builder.append(", corCabelo=");
 		builder.append(corCabelo);
+		builder.append(", empregada=");
+		builder.append(empregada);
+		builder.append(", cargo=");
+		builder.append(cargo);
 		builder.append("]");
 		return builder.toString();
 	}
