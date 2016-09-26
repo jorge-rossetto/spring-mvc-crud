@@ -38,12 +38,23 @@
 				Empregada?
 				</label>
 			</div>
-			<div class="form-group">
-				<label>Cargo</label>
-				<label class="radio-inline" th:text="${cargo.label}" th:each="cargo : ${todosCargos}" >
-						<input type="radio"
-							th:field="*{cargo}" th:value="${cargo}" /></label>
-			</div>							
+			
+			<div class="form-group" >
+				<label for="cargos">Cargo</label>
+				<div id="cargos">
+                	<label id="cargos" th:each="cargo : ${todosCargos}" th:for="${#ids.next('cargo')}">
+                    	<input type="radio" th:field="*{cargo}"                      
+	                        th:text="${cargo.label}" th:value="${cargo}" />
+                	</label>
+                </div>
+            </div>
+			
+<!-- 			<div class="form-group"> -->
+<!-- 				<label>Cargo</label> -->
+<!-- 				<label class="radio-inline" th:text="${cargo.label}" th:each="cargo : ${todosCargos}" > -->
+<!-- 						<input type="radio" -->
+<!-- 							th:field="*{cargo}" th:value="${cargo}" /></label> -->
+<!-- 			</div>							 -->
 <!-- 				<ul> -->
 <!-- 					<li th:each="cargo : ${todosCargos}" > -->
 <!-- 						<input type="radio" -->
@@ -51,6 +62,7 @@
 <!-- 						<label -->
 <!-- 							th:for="${#ids.prev('cargo')}" -->
 <!-- 							th:text="${cargo.label}" -->
+<!-- 							class="radio-inline" -->
 <!-- 							 ></label> -->
 <!-- 					</li> -->
 <!-- 				</ul> -->
