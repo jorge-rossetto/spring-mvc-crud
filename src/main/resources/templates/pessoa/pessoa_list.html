@@ -1,25 +1,27 @@
 <html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
 
 <div layout:fragment="content">
-
-
+	
+	<br />
+	
 	<form action="#" th:action="@{/pessoa}" th:object="${pessoaFilter}"
-		method="post">
+		method="post" class="form-inline">
+		<div class="form-group">
+			<ul th:if="${#fields.hasAnyErrors()}">
+				<li th:each="error : ${#fields.allErrors()}" th:text="${error}" />
+			</ul>
 
-		<ul th:if="${#fields.hasAnyErrors()}">
-			<li th:each="error : ${#fields.allErrors()}" th:text="${error}" />
-		</ul>
-
-		<p>
-			Nome: <input type="text" th:field="*{nome}" /> 
-			Idade: <input type="text" th:field="*{idade}" />
-		</p>
-		<p>
-			<input type="submit" value="Listar" />
-		</p>
+			<p>
+				Nome: <input type="text" th:field="*{nome}" class="form-control" />
+				Idade: <input type="text" th:field="*{idade}" class="form-control" />
+				<input type="submit" value="Listar" class="btn btn-primary" />
+			</p>
+		</div>
 	</form>
+	
+	<br />
 
-	<table class="table table-striped">
+	<table class="table table-striped ">
 		<thead>
 			<tr>
 				<th>ID</th>
@@ -27,14 +29,14 @@
 				<th>Idade</th>
 				<th>Data nascimento</th>
 				<th>Data nascimento (sem formatter)</th>
-				<th>Cor do Cabelo</th>				
+				<th>Cor do Cabelo</th>
 				<th>Empregada?</th>
 				<th>Cargo</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr data-th-each="pessoa : ${pessoas}">
-			
+
 				<td class="message" th:text="${pessoa.id}" />
 				<td class="message" th:text="${pessoa.nome}" />
 				<td class="message" th:text="${pessoa.idade}" />
@@ -42,24 +44,23 @@
 				<td class="message" th:text="${pessoa.dataNascimento}" />
 				<td class="message" th:text="${pessoa.corCabelo.label}" />
 				<td class="message" th:text="${pessoa.empregada} ? 'Sim	' : 'Não'" />
-				<td class="message" th:text="${pessoa.cargo != null ? pessoa.cargo.label : ''}" />
-				
-				<td>
-					<a th:href="@{'/pessoa/{id}/delete'(id=${pessoa.id})}"
-						class="delete"> 
-						<span class="fa-stack"><i class="glyphicon glyphicon-trash"></i></span>
-					</a>
-				</td>
-				<td>
-					<a th:href="@{'/pessoa/{id}/edit'(id=${pessoa.id})}"
-						class="edit">
-						<span class="fa-stack"><i class="glyphicon glyphicon-edit"></i></span>
-					</a>
-				</td>
+				<td class="message"
+					th:text="${pessoa.cargo != null ? pessoa.cargo.label : ''}" />
+
+				<td><a th:href="@{'/pessoa/{id}/delete'(id=${pessoa.id})}"
+					class="delete"> <span class="fa-stack"><i
+							class="glyphicon glyphicon-trash"></i></span>
+				</a></td>
+				<td><a th:href="@{'/pessoa/{id}/edit'(id=${pessoa.id})}"
+					class="edit"> <span class="fa-stack"><i
+							class="glyphicon glyphicon-edit"></i></span>
+				</a></td>
 			</tr>
 		</tbody>
 	</table>
-
+	
+	<br />
+	
 	<a class="btn btn-primary" th:href="@{/pessoa/new}">Inserir</a>
 </div>
 </html>

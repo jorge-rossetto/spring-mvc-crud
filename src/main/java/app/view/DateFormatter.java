@@ -4,8 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.logging.Logger;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 
@@ -16,7 +16,7 @@ public class DateFormatter implements Formatter<Date> {
 	
 	public Date parse(final String text, final Locale locale) throws ParseException {
 		
-		logger.info("executando parse do DateFormatter");
+		logger.debug("executando parse do DateFormatter");
 		
 		final SimpleDateFormat dateFormat = dateFormat();
 		return dateFormat.parse(text);
@@ -24,7 +24,7 @@ public class DateFormatter implements Formatter<Date> {
 
 	public String print(final Date object, final Locale locale) {
 		
-		logger.info("executando print do DateFormatter");
+		logger.debug("executando print do DateFormatter");
 		
 		final SimpleDateFormat dateFormat = dateFormat();
 		return dateFormat.format(object);
