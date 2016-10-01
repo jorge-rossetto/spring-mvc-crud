@@ -1,9 +1,21 @@
 <html layout:decorator="layout" xmlns:th="http://www.thymeleaf.org">
 
 <div layout:fragment="content">
-	
+
+
+	<script>
+		function listar() {
+			// TODO usar url processada pelo thymeleaf
+			var url = '/pessoa/ajax';
+			// 			if ($('#searchSurname').val() != '') {
+			// 				url = url + '/' + $('#searchSurname').val();
+			// 			}
+			$("#listResult").load(url);
+		}
+	</script>
+
 	<br />
-	
+
 	<form action="#" th:action="@{/pessoa}" th:object="${pessoaFilter}"
 		method="post" class="form-inline">
 		<div class="form-group">
@@ -14,53 +26,62 @@
 			<p>
 				Nome: <input type="text" th:field="*{nome}" class="form-control" />
 				Idade: <input type="text" th:field="*{idade}" class="form-control" />
-				<input type="submit" value="Listar" class="btn btn-primary" />
+
+				<!-- 				<input type="submit" value="Listar" class="btn btn-primary" /> -->
+				<input type="button" class="btn btn-primary" value="Listar"
+					onclick="listar()" />
+				<!-- se chamar a funcao de list() nao funciona! talvez seja palavra reservada -->
 			</p>
 		</div>
 	</form>
-	
+
 	<br />
 
-	<table class="table table-striped ">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Nome</th>
-				<th>Idade</th>
-				<th>Data nascimento</th>
-				<th>Data nascimento (sem formatter)</th>
-				<th>Cor do Cabelo</th>
-				<th>Empregada?</th>
-				<th>Cargo</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr data-th-each="pessoa : ${pessoas}">
+	<div id="listResult">
 
-				<td class="message" th:text="${pessoa.id}" />
-				<td class="message" th:text="${pessoa.nome}" />
-				<td class="message" th:text="${pessoa.idade}" />
-				<td class="message" th:text="${{pessoa.dataNascimento}}" />
-				<td class="message" th:text="${pessoa.dataNascimento}" />
-				<td class="message" th:text="${pessoa.corCabelo.label}" />
-				<td class="message" th:text="${pessoa.empregada} ? 'Sim	' : 'Não'" />
-				<td class="message"
-					th:text="${pessoa.cargo != null ? pessoa.cargo.label : ''}" />
+	<div th:fragment="resultsList" th:unless="${#lists.isEmpty(pessoas)}">
 
-				<td><a th:href="@{'/pessoa/{id}/delete'(id=${pessoa.id})}"
-					class="delete"> <span class="fa-stack"><i
-							class="glyphicon glyphicon-trash"></i></span>
-				</a></td>
-				<td><a th:href="@{'/pessoa/{id}/edit'(id=${pessoa.id})}"
-					class="edit"> <span class="fa-stack"><i
-							class="glyphicon glyphicon-edit"></i></span>
-				</a></td>
-			</tr>
-		</tbody>
-	</table>
+		<table class="table table-striped ">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nome</th>
+					<th>Idade</th>
+					<th>Data nascimento</th>
+					<th>Data nascimento (sem formatter)</th>
+					<th>Cor do Cabelo</th>
+					<th>Empregada?</th>
+					<th>Cargo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-th-each="pessoa : ${pessoas}">
+
+					<td class="message" th:text="${pessoa.id}" />
+					<td class="message" th:text="${pessoa.nome}" />
+					<td class="message" th:text="${pessoa.idade}" />
+					<td class="message" th:text="${{pessoa.dataNascimento}}" />
+					<td class="message" th:text="${pessoa.dataNascimento}" />
+					<td class="message" th:text="${pessoa.corCabelo.label}" />
+					<td class="message" th:text="${pessoa.empregada} ? 'Sim	' : 'Não'" />
+					<td class="message"
+						th:text="${pessoa.cargo != null ? pessoa.cargo.label : ''}" />
+
+					<td><a th:href="@{'/pessoa/{id}/delete'(id=${pessoa.id})}"
+						class="delete"> <span class="fa-stack"><i
+								class="glyphicon glyphicon-trash"></i></span>
+					</a></td>
+					<td><a th:href="@{'/pessoa/{id}/edit'(id=${pessoa.id})}"
+						class="edit"> <span class="fa-stack"><i
+								class="glyphicon glyphicon-edit"></i></span>
+					</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	</div>
 	
-	<br />
-	
-	<a class="btn btn-primary" th:href="@{/pessoa/new}">Inserir</a>
+	<!-- 	<br /> <a class="btn btn-primary" th:href="@{/pessoa/new}">Inserir</a> -->
 </div>
 </html>
