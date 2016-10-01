@@ -25,6 +25,7 @@ public class PessoaController {
 	@Autowired
 	private PessoaRepository repository;
 
+	// versão sem ajax:
 	@RequestMapping(method = { RequestMethod.GET, RequestMethod.POST })
 	public String list(@ModelAttribute("pessoaFilter") Pessoa pessoaFilter, BindingResult bindingResult, Model model) {
 
@@ -35,6 +36,26 @@ public class PessoaController {
 		model.addAttribute("pessoas", repository.findByFilter(pessoaFilter));
 		return "pessoa/pessoa_list";
 	}
+	
+	// versão ajax
+	@RequestMapping(value="/ajax", method = { RequestMethod.GET, RequestMethod.POST })
+	public String listAjax(@ModelAttribute("pessoaFilter") Pessoa pessoaFilter, BindingResult bindingResult, Model model) {
+
+		if (bindingResult.hasErrors()) {
+			return "pessoa/pessoa_list";
+		}
+
+		model.addAttribute("pessoas", repository.findByFilter(pessoaFilter));
+		return "pessoa/pessoa_list :: resultsList";
+	}
+	
+//	@RequestMapping(value="/ajax", method = { RequestMethod.GET })
+//	public String ajax(Model model) {
+//		System.out.println("************************************** rodou ajax()");
+//		model.addAttribute("ajaxModel", new Random().nextInt(10));
+//		return "pessoa/pessoa_list :: resultsList";
+//	}
+	
 
 	@RequestMapping(value = "/new", method = RequestMethod.GET)
 	public String newPessoa(Model model) {
@@ -81,29 +102,4 @@ public class PessoaController {
 		return Arrays.asList(Cargo.values());
 	}
 
-	// @RequestMapping(value = "/create", method = RequestMethod.POST)
-	// public String create(@ModelAttribute("pessoa") Pessoa pessoa,
-	// BindingResult bindingResult, Model model) {
-	//
-	// if (bindingResult.hasErrors()) {
-	// return "pessoa/pessoa_edit";
-	// }
-	//
-	// repository.save(pessoa);
-	//
-	// return "redirect:/pessoa";
-	// }
-
-	// @RequestMapping(value = "/update", method = RequestMethod.POST)
-	// public String update(@ModelAttribute("pessoa") Pessoa pessoaAlterada,
-	// BindingResult bindingResult, Model model) {
-	//
-	// if (bindingResult.hasErrors()) {
-	// return "pessoa/pessoa_edit";
-	// }
-	//
-	// repository.save(pessoaAlterada);
-	//
-	// return "redirect:/pessoa";
-	// }
 }
